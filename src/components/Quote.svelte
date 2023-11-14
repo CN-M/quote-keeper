@@ -13,7 +13,13 @@
 	};
 
 	let data = getData();
-	console.log(data);
+	// console.log(data);
+
+	const fetchData = async () => {
+		data = await getData();
+	};
+
+	fetchData();
 
 	if (typeof window !== 'undefined') {
 		storedQuotes = localStorage.getItem('Quotes');
@@ -24,10 +30,13 @@
 		}
 	}
 
-	const getNewQuote = () => {
-		data = getData();
-
-		console.log(data);
+	const getNewQuote = async () => {
+		try {
+			const data = await getData();
+			return data;
+		} catch (err) {
+			console.error('Error fetching data:', err);
+		}
 	};
 
 	// const bookMarkQuote = async (): Promise<void> => {
@@ -41,8 +50,10 @@
 	};
 
 	const deleteQuote = (idx: number): void => {
-		mainQuotes.filter((quotes, idx) => quotes);
-		mainQuotes.splice(idx, 1);
+		mainQuotes = mainQuotes.filter((quote, i) => i !== idx);
+
+		// mainQuotes = mainQuotes.splice(idx, 1);
+
 		localStorage.setItem('Quotes', JSON.stringify(mainQuotes));
 	};
 </script>
@@ -83,7 +94,6 @@
 			>
 				<p class="text-xl p-5 text-center">Getting quote...</p>
 			</div>
-			<!-- {:then data} -->
 		{:then { content, author }}
 			<div
 				class="border flex flex-col justify-center items-center p-5 m-2 rounded-lg border-blue-300"
