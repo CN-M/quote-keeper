@@ -1,7 +1,8 @@
 <script lang="ts">
-	export let quoteData: QuoteType;
+	export let data: QuoteType;
 
 	let storedQuotes: string | null = '';
+
 	let mainQuotes: QuoteType[] = [];
 
 	if (typeof window !== 'undefined') {
@@ -9,6 +10,7 @@
 
 		if (storedQuotes) {
 			mainQuotes = JSON.parse(storedQuotes);
+			console.log(mainQuotes);
 		}
 	}
 
@@ -17,12 +19,11 @@
 	};
 
 	const bookMarkQuote = (): void => {
-		mainQuotes.push(quoteData);
+		mainQuotes.push(data);
 		localStorage.setItem('Quotes', JSON.stringify(mainQuotes));
-		console.log(JSON.stringify(mainQuotes));
 	};
 
-	const deleteQuote = (idx: number, author: string): void => {
+	const deleteQuote = (idx: number): void => {
 		mainQuotes.splice(idx, 1);
 		localStorage.setItem('Quotes', JSON.stringify(mainQuotes));
 	};
@@ -46,7 +47,7 @@
 					<p class="text-xl font-bold">- {author}</p>
 					<button
 						class="bg-red-400 mt-2 p-3 rounded-md text-white hover:opacity-80"
-						on:click={() => deleteQuote(idx, author)}
+						on:click={() => deleteQuote(idx)}
 					>
 						Delete Quote
 					</button>
@@ -57,13 +58,13 @@
 
 	<div class="flex flex-col justify-center items-center border-t border-b p-5">
 		<h1 class="text-3xl">Newest Quotes</h1>
-		{#await quoteData}
+		{#await data}
 			<div
 				class="border flex flex-col justify-center items-center p-5 m-2 rounded-lg border-blue-300"
 			>
 				<p class="text-xl p-5 text-center">Getting quote...</p>
 			</div>
-			<!-- {:then quoteData} -->
+			<!-- {:then data} -->
 		{:then { content, author }}
 			<div
 				class="border flex flex-col justify-center items-center p-5 m-2 rounded-lg border-blue-300"

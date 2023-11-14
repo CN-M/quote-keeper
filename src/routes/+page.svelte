@@ -9,5 +9,5 @@
 </svelte:head>
 
 <section class="flex flex-col justify-center items-center">
-	<Quote quoteData={data} />
+	<Quote {data} />
 </section>

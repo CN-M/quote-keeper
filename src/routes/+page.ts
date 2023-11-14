@@ -3,13 +3,8 @@
 // export const prerender = true;
 
 export const load = async ({ fetch }) => {
-	// const getstuff = async <TData>(): Promise<TData> => {
-	const getstuff = async () => {
-		const res = await fetch('https://api.quotable.io/random');
-		const data = await res.json();
+	const res = await fetch('https://api.quotable.io/random');
+	const data = await res.json();
 
-		return data as QuoteType;
-	};
-
-	return getstuff();
+	return data as QuoteType;
 };
