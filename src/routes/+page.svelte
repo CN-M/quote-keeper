@@ -1,2 +1,13 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import Quote from '../components/Quote.svelte';
+	export let data;
+</script>
+
+<svelte:head>
+	<title>Quote Keeper</title>
+	<meta name="description" content="Quote Keeper App" />
+</svelte:head>
+
+<section class="flex flex-col justify-center items-center">
+	<Quote quoteData={data} />
+</section>
