@@ -1,9 +1,19 @@
 <script lang="ts">
-	export let data: QuoteType;
+	// export let data: QuoteType;
 
 	let storedQuotes: string | null = '';
 
 	let mainQuotes: QuoteType[] = [];
+
+	const getData = async () => {
+		const res = await fetch('https://api.quotable.io/random');
+		const data = await res.json();
+
+		return data as QuoteType;
+	};
+
+	let data = getData();
+	console.log(data);
 
 	if (typeof window !== 'undefined') {
 		storedQuotes = localStorage.getItem('Quotes');
@@ -14,16 +24,24 @@
 		}
 	}
 
-	const reloadPage = (): void => {
-		location.reload();
+	const getNewQuote = () => {
+		data = getData();
+
+		console.log(data);
 	};
 
-	const bookMarkQuote = (): void => {
-		mainQuotes.push(data);
+	// const bookMarkQuote = async (): Promise<void> => {
+	const bookMarkQuote = () => {
+		// quotes = [...quotes, data];
+		// const data = await getData();
+		const data = getData();
+		mainQuotes = [...mainQuotes, data];
+		// mainQuotes.push(data);
 		localStorage.setItem('Quotes', JSON.stringify(mainQuotes));
 	};
 
 	const deleteQuote = (idx: number): void => {
+		mainQuotes.filter((quotes, idx) => quotes);
 		mainQuotes.splice(idx, 1);
 		localStorage.setItem('Quotes', JSON.stringify(mainQuotes));
 	};
@@ -40,6 +58,7 @@
 			</div>
 		{:else}
 			{#each mainQuotes as { content, author }, idx}
+				<!-- {#each quotes as { content, author }, idx} -->
 				<div
 					class="border flex flex-col justify-center items-center p-5 m-2 rounded-lg border-emerald-300"
 				>
@@ -76,7 +95,7 @@
 	</div>
 
 	<div class="space-x-10">
-		<button class="bg-blue-500 p-5 rounded-md text-white hover:opacity-80" on:click={reloadPage}>
+		<button class="bg-blue-500 p-5 rounded-md text-white hover:opacity-80" on:click={getNewQuote}>
 			Get New Quote
 		</button>
 		<button

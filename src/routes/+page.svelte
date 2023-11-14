@@ -1,6 +1,6 @@
 <script>
 	import Quote from '../components/Quote.svelte';
-	export let data;
+	// export let data;
 </script>
 
 <svelte:head>
@@ -9,5 +9,6 @@
 </svelte:head>
 
 <section class="flex flex-col justify-center items-center">
-	<Quote {data} />
+	<!-- <Quote {data} /> -->
+	<Quote />
 </section>

@@ -1,4 +1,5 @@
 type QuoteType = {
+	_id: string!;
 	author: string;
 	authorSlug: string;
 	content: string;
